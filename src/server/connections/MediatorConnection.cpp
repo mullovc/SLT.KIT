@@ -329,14 +329,14 @@ void MediatorConnection::initConnection() {
 
     /* Connect and Process */
     if (ssl) {
-        cloudP = mcloudCreate ("smt", MCloudModeWorker));
+        cloudP = mcloudCreate ("smt", MCloudModeWorker);
     } else {
         cloudP = mcloudCreateSSL("smt", MCloudModeWorker, MCloudSSL_FullVerify);
     }
     if ( cloudP == NULL ) {
         fprintf (stderr, "ERROR creating Cloud Object.\n");
         exit(-1);
-      }
+    }
 
 
 
