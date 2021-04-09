@@ -17,6 +17,7 @@ MediatorConnection::MediatorConnection(xml_node<> * desc,PipelineManager * p) : 
     targetLanguageType = "text";
     host = "";
     port = -1;
+    ssl = false;
 
     ignoreFlush = false;
 
@@ -327,7 +328,12 @@ void MediatorConnection::finalize() {
 void MediatorConnection::initConnection() {
 
     /* Connect and Process */
-    if ( (cloudP = mcloudCreate ("smt", MCloudModeWorker)) == NULL ) {
+    if (ssl) {
+        cloudP = mcloudCreate ("smt", MCloudModeWorker));
+    } else {
+        cloudP = mcloudCreateSSL("smt", MCloudModeWorker, MCloudSSL_FullVerify);
+    }
+    if ( cloudP == NULL ) {
         fprintf (stderr, "ERROR creating Cloud Object.\n");
         exit(-1);
       }
@@ -362,10 +368,12 @@ void MediatorConnection::parseXML(xml_node<> * desc) {
             host = trim(node->value());
         }else if (strcmp(node->name(), "port") == 0) {
             port = atoi(node->value());
-	}else if(strcmp(node->name(), "ignoreFlush") == 0) {
-		ignoreFlush = atoi(node->value());
+	    }else if(strcmp(node->name(), "ignoreFlush") == 0) {
+		    ignoreFlush = atoi(node->value());
         }else if (strcmp(node->name(), "ignoreOffset") == 0) {
             ignoreOffset = atoi(node->value());
+        }else if (strcmp(node->name(), "ssl") == 0) {
+            ssl = atoi(node->value());
         }
     }
 
