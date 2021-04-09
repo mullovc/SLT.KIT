@@ -42,6 +42,7 @@ class MediatorConnection : public Connection{
 	string targetLanguageType;
 	string host;
 	int port;
+	bool ssl;
 	string workerName;
 
 	PipelineManager * server;
