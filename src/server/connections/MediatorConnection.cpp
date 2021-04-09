@@ -330,8 +330,10 @@ void MediatorConnection::initConnection() {
     /* Connect and Process */
     if (ssl) {
         cloudP = mcloudCreate ("smt", MCloudModeWorker);
+        cout << "Connecting without SSL" << endl;
     } else {
         cloudP = mcloudCreateSSL("smt", MCloudModeWorker, MCloudSSL_FullVerify);
+        cout << "Connecting with SSL" << endl;
     }
     if ( cloudP == NULL ) {
         fprintf (stderr, "ERROR creating Cloud Object.\n");
