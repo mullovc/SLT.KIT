@@ -119,7 +119,7 @@ Text SentenceDataFlow::getData() {
 
     getPreData(result);
 
-    if(result[result.size() -1].type != FINAL) {
+    if(!result.empty() && result[result.size() -1].type != FINAL) {
         int startTime;
         int stopTime;
         if(currentSent.text.compare("") == 0) {
